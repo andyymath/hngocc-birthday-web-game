@@ -12,11 +12,10 @@ body {
 
   font-family: 'Poppins', sans-serif;
 
-  overflow: visible;
+  overflow: hidden;
 }
 
 /* warm lighting */
-
 body::before {
 
   content: "";
@@ -35,11 +34,14 @@ body::before {
   pointer-events: none;
 }
 
+/* hidden */
 .hidden {
   display: none !important;
 }
 
-/* INTRO */
+/* =========================
+   INTRO
+========================= */
 
 #introScreen {
 
@@ -76,6 +78,7 @@ body::before {
   margin-bottom: 40px;
 }
 
+/* BUTTON */
 button {
 
   padding: 14px 28px;
@@ -96,11 +99,109 @@ button {
 }
 
 button:hover {
-
   transform: scale(1.05);
 }
 
-/* GAME */
+/* =========================
+   MUSIC SCREEN (PASTEL FIX)
+========================= */
+
+#musicScreen {
+
+  position: fixed;
+  inset: 0;
+
+  background: #F7F7F2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 3000;
+
+  animation: fadeIn 0.8s ease;
+}
+
+/* soft glow background */
+#musicScreen::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(174,195,160,0.35),
+      transparent 60%
+    );
+
+  pointer-events: none;
+}
+
+#musicScreen h1 {
+
+  font-family: 'Cormorant Garamond', serif;
+
+  font-size: 64px;
+
+  margin-bottom: 40px;
+
+  color: #3E5F44;
+}
+
+.musicList {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+  z-index: 1;
+}
+
+.musicBtn {
+
+  width: 340px;
+
+  padding: 18px 22px;
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(174,195,160,0.6);
+
+  background: rgba(221,229,208,0.7);
+
+  color: #3E5F44;
+
+  font-size: 17px;
+
+  backdrop-filter: blur(8px);
+
+  transition: 0.25s;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.musicBtn:hover {
+
+  transform: translateY(-2px) scale(1.02);
+
+  background: rgba(174,195,160,0.5);
+
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   GAME
+========================= */
 
 #gameScreen {
 
@@ -119,7 +220,7 @@ button:hover {
 
 #topBar {
 
-  width: 960px;
+  width: 760px;
 
   display: flex;
 
@@ -136,11 +237,9 @@ button:hover {
 
   grid-template-columns: repeat(16, 60px);
 
-  grid-template-rows: repeat(16, 60px);
+  grid-template-rows: repeat(15, 60px);
 
   gap: 4px;
-
-  transform: scale(0.92);
 }
 
 .cell {
@@ -159,22 +258,11 @@ button:hover {
 }
 
 .wall {
-
   background: #AEC3A0;
 }
 
 .path {
-
   background: #F7F7F2;
-}
-
-
-.goal {
-
-  background: #FB6F92;
-
-  box-shadow:
-    0 0 18px rgba(251,111,146,0.35);
 }
 
 .memory {
@@ -203,8 +291,12 @@ button:hover {
   font-size: 22px;
 }
 
-/* PLAYER + GOAL IMAGE */
+.goal {
 
+  box-shadow: 0 0 20px rgba(255,220,120,0.5);
+}
+
+/* SPRITE */
 .sprite {
 
   width: 120%;
@@ -221,12 +313,14 @@ button:hover {
 
   object-fit: contain;
 
-  z-index: 5;
-
   pointer-events: none;
+
+  z-index: 5;
 }
 
-/* POPUP */
+/* =========================
+   POPUP
+========================= */
 
 #memoryPopup {
 
@@ -249,9 +343,9 @@ button:hover {
 
 .popupContent {
 
-  width: 420px;
+  width: 400px;
 
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.15);
 
   border: 1px solid rgba(255,255,255,0.2);
 
@@ -278,7 +372,9 @@ button:hover {
   line-height: 1.7;
 }
 
-/* TRANSITION */
+/* =========================
+   TRANSITION
+========================= */
 
 #transitionScreen {
 
@@ -304,11 +400,11 @@ button:hover {
   font-family: 'Cormorant Garamond', serif;
 
   font-size: 70px;
-
-  color: #3E5F44;
 }
 
-/* ENDING */
+/* =========================
+   ENDING
+========================= */
 
 #endingScreen {
 
@@ -349,65 +445,69 @@ button:hover {
   margin-bottom: 40px;
 }
 
+/* GALLERY */
 .gallery {
 
   display: flex;
 
-  gap: 20px;
+  gap: 24px;
 
   flex-wrap: wrap;
 
   justify-content: center;
 
+  align-items: flex-end;
+
   margin-bottom: 40px;
+
+  max-width: 1000px;
 }
 
 .gallery img {
 
-  width: 250px;
+  max-width: 260px;
+
+  max-height: 340px;
+
+  width: auto;
+
+  height: auto;
+
+  object-fit: contain;
 
   border-radius: 24px;
 
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+  transition: 0.3s;
 }
 
-/* ANIMATIONS */
+.gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes pulse {
+
+  0% { box-shadow: 0 0 0px rgba(255,255,180,0.2); }
+
+  50% { box-shadow: 0 0 18px rgba(255,255,180,0.8); }
+
+  100% { box-shadow: 0 0 0px rgba(255,255,180,0.2); }
+}
 
 @keyframes fadeIn {
 
   from {
-
     opacity: 0;
-
     transform: translateY(20px);
   }
 
   to {
-
     opacity: 1;
-
     transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-
-  0% {
-
-    box-shadow:
-      0 0 0px rgba(255,255,180,0.2);
-  }
-
-  50% {
-
-    box-shadow:
-      0 0 18px rgba(255,255,180,0.7);
-  }
-
-  100% {
-
-    box-shadow:
-      0 0 0px rgba(255,255,180,0.2);
   }
 }
