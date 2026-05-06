@@ -1,125 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Find Me</title>
-
-  <link rel="stylesheet" href="style.css" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE BIRTHDAY QUEST</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-  <!-- INTRO -->
-  <section id="introScreen">
+    <!-- Màn hình bắt đầu -->
+    <section id="introScreen">
+        <h1>THE BIRTHDAY QUEST</h1>
+        <button id="startBtn">Start Quest</button>
+    </section>
 
-    <h1>Find Me</h1>
+    <!-- Chọn nhạc -->
+    <section id="musicScreen" class="hidden">
+        <h1>Chọn một bản nhạc nền</h1>
+        <div class="musicList">
+            <button class="musicBtn" data-song="audio/HOÀNG DŨNG - PHONECERT.mp3">Phonecert</button>
+            <button class="musicBtn" data-song="audio/Cảm Ơn Người Đã Thức Cùng Tôi.mp3">Cảm Ơn Người Đã Thức Cùng Tôi</button>
+            <button class="musicBtn" data-song="audio/Chưa Được Yêu Như Thế.mp3">Chưa Được Yêu Như Thế</button>
+            <button class="musicBtn" data-song="audio/A Little Dream Of Me.mp3">A Little Dream Of Me</button>
+            <button class="musicBtn" data-song="audio/Thịnh Suy - Tình Yêu Xanh Lá (juju).mp3">Tình Yêu Xanh Lá</button>
+        </div>
+    </section>
 
-    <p>Some memories are worth getting lost for.</p>
+    <!-- Luật chơi -->
+    <section id="rulesScreen" class="hidden">
+        <div class="rulesBox">
+            <h1>Luật Chơi</h1>
+            <ul>
+                <li>Dùng các phím mũi tên để di chuyển</li>
+                <li>Thu thập tất cả mảnh ký ức ✨</li>
+                <li>Đến đích đến cuối cùng ❤️</li>
+            </ul>
+            <button id="startGameBtn">Bắt Đầu Trò Chơi</button>
+        </div>
+    </section>
 
-    <button id="startBtn">Start Journey</button>
+    <!-- Màn hình Game -->
+    <section id="gameScreen" class="hidden">
+        <div id="topBar">
+            <div id="objective">Tìm tất cả ký ức ✨</div>
+            <div id="memoryCount">0 / 5</div>
+        </div>
+        <div id="maze"></div>
+    </section>
 
-  </section>
-
-  <!-- MUSIC SCREEN -->
-  <section id="musicScreen" class="hidden">
-
-    <h1>Choose a soundtrack</h1>
-
-    <div class="musicList">
-
-      <button class="musicBtn" data-song="audio/Đừng Làm Trái Tim Anh Đau.mp3">
-        Đừng Làm Trái Tim Anh Đau
-      </button>
-
-      <button class="musicBtn" data-song="audio/Cảm Ơn Người Đã Thức Cùng Tôi.mp3">
-        Cảm Ơn Người Đã Thức Cùng Tôi
-      </button>
-
-      <button class="musicBtn" data-song="audio/Chưa Được Yêu Như Thế.mp3">
-        Chưa Được Yêu Như Thế
-      </button>
-
-      <button class="musicBtn" data-song="audio/A Little Dream Of Me.mp3">
-        A Little Dream Of Me
-      </button>
-
-      <button class="musicBtn" data-song="audio/Thịnh Suy - Tình Yêu Xanh Lá (juju).mp3">
-        Tình Yêu Xanh Lá
-      </button>
-
+    <!-- Popup ký ức -->
+    <div id="memoryPopup" class="hidden">
+        <div class="popupContent">
+            <img id="memoryImage" src="" alt="Ký ức" />
+            <p id="memoryText"></p>
+            <button id="closePopup">Tiếp Tục</button>
+        </div>
     </div>
 
-  </section>
+    <!-- Chuyển cảnh -->
+    <section id="transitionScreen" class="hidden">
+        <h1>Và cuối cùng, em đã ở đây.</h1>
+    </section>
 
-  <!-- GAME -->
-  <section id="gameScreen" class="hidden">
+    <!-- Màn hình kết thúc -->
+    <section id="endingScreen" class="hidden">
+        <h1>Chúc Mừng Sinh Nhật Hải Ngọc Iuuuuu ❤️</h1>
+        <p class="endingMessage">
+            Chúc bé tuổi mới thật rực rỡ, luôn tràn đầy năng lượng, niềm vui và đạt được mọi dự định em bé đặt ra aaaaaa 😘 Mong bé sẽ luôn mạnh mẽ vượt qua mọi khó khăn, giữ được tinh thần luôn vui tươi vì ở phía sau sẽ luôn có anh ủng hộ mọi việc em bé làm 🥹 Mong mình sẽ đồng hành cùng nhau thật lâu lâu nữa để làm đầy bộ sưu tập ảnh chung này của tụi mình nhoooooo 💞 Anh iu bé nhìu lammmmmmm 😘
+        </p>
+        <div class="gallery"></div>
+        <button id="replayBtn">Chơi Lại</button>
+    </section>
 
-    <div id="topBar">
-
-      <div id="objective">Find all memories ✨</div>
-
-      <div id="memoryCount">0 / 5</div>
-
+    <!-- Phóng to ảnh -->
+    <div id="imageModal" class="hidden">
+        <div class="modalOverlay"></div>
+        <img id="modalImg" src="" alt="Zoomed view" />
     </div>
 
-    <div id="maze"></div>
-
-  </section>
-
-  <!-- MEMORY POPUP -->
-  <div id="memoryPopup" class="hidden">
-
-    <div class="popupContent">
-
-      <img id="memoryImage" />
-
-      <p id="memoryText"></p>
-
-      <button id="closePopup">Continue</button>
-
-    </div>
-
-  </div>
-
-  <!-- TRANSITION -->
-  <section id="transitionScreen" class="hidden">
-    <h1>And there you are.</h1>
-  </section>
-
-  <!-- ENDING -->
-  <section id="endingScreen" class="hidden">
-
-    <h1>Happy Birthday ❤️</h1>
-
-    <p class="endingMessage">
-      I think every path somehow led me to you.
-    </p>
-
-    <div class="gallery">
-
-      <img src="images/Nu1.jpg" />
-      <img src="images/Nu2.jpg" />
-      <img src="images/Nu3.jpg" />
-      <img src="images/Nu4.jpg" />
-      <img src="images/Nu5.jpg" />
-
-    </div>
-
-    <button id="replayBtn">Play Again</button>
-
-  </section>
-
-  <!-- AUDIO -->
-  <audio id="bgMusic" loop></audio>
-
-  <script src="script.js"></script>
-
+    <audio id="bgMusic" loop></audio>
+    <script src="script.js"></script>
 </body>
 </html>
