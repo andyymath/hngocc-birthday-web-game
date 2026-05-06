@@ -4,54 +4,68 @@
 <head>
 
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Find Me</title>
 
   <link rel="stylesheet" href="style.css" />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Poppins:wght@300;400;500&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
   <!-- INTRO -->
-
   <section id="introScreen">
 
     <h1>Find Me</h1>
 
-    <p>
-      Some memories are worth getting lost for.
-    </p>
+    <p>Some memories are worth getting lost for.</p>
 
-    <button id="startBtn">
-      Start Journey
-    </button>
+    <button id="startBtn">Start Journey</button>
+
+  </section>
+
+  <!-- MUSIC SCREEN -->
+  <section id="musicScreen" class="hidden">
+
+    <h1>Choose a soundtrack</h1>
+
+    <div class="musicList">
+
+      <button class="musicBtn" data-song="audio/Lời Yêu Em.mp3">
+        Lời Yêu Em
+      </button>
+
+      <button class="musicBtn" data-song="audio/Cảm Ơn Người Đã Thức Cùng Tôi.mp3">
+        Cảm Ơn Người Đã Thức Cùng Tôi
+      </button>
+
+      <button class="musicBtn" data-song="audio/Chưa Được Yêu Như Thế.mp3">
+        Chưa Được Yêu Như Thế
+      </button>
+
+      <button class="musicBtn" data-song="audio/A Little Dream Of Me.mp3">
+        A Little Dream Of Me
+      </button>
+
+      <button class="musicBtn" data-song="audio/Thịnh Suy - Tình Yêu Xanh Lá (juju).mp3">
+        Tình Yêu Xanh Lá
+      </button>
+
+    </div>
 
   </section>
 
   <!-- GAME -->
-
   <section id="gameScreen" class="hidden">
 
     <div id="topBar">
 
-      <div id="objective">
-        Find all memories ✨
-      </div>
+      <div id="objective">Find all memories ✨</div>
 
-      <div id="memoryCount">
-        0 / 2
-      </div>
+      <div id="memoryCount">0 / 5</div>
 
     </div>
 
@@ -60,7 +74,6 @@
   </section>
 
   <!-- MEMORY POPUP -->
-
   <div id="memoryPopup" class="hidden">
 
     <div class="popupContent">
@@ -69,28 +82,20 @@
 
       <p id="memoryText"></p>
 
-      <button id="closePopup">
-        Continue
-      </button>
+      <button id="closePopup">Continue</button>
 
     </div>
 
   </div>
 
   <!-- TRANSITION -->
-
   <section id="transitionScreen" class="hidden">
-
-    <h1>
-      And there you are.
-    </h1>
-
+    <h1>And there you are.</h1>
   </section>
 
   <!-- ENDING -->
-
   <section id="endingScreen" class="hidden">
-    
+
     <h1>Happy Birthday ❤️</h1>
 
     <p class="endingMessage">
@@ -99,25 +104,20 @@
 
     <div class="gallery">
 
-      <img src="images/us1.jpg" />
-      <img src="images/us2.jpg" />
-      <img src="images/us3.jpg" />
+      <img src="images/Nu1.jpg" />
+      <img src="images/Nu2.jpg" />
+      <img src="images/Nu3.jpg" />
       <img src="images/Nu4.jpg" />
       <img src="images/Nu5.jpg" />
 
     </div>
 
-    <button id="replayBtn">
-      Play Again
-    </button>
+    <button id="replayBtn">Play Again</button>
 
   </section>
 
-  <!-- MUSIC -->
-
-  <audio id="bgMusic" loop>
-    <source src="audio/Thịnh Suy - Tình Yêu Xanh Lá (juju).mp3" type="audio/mpeg">
-  </audio>
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop></audio>
 
   <script src="script.js"></script>
 
