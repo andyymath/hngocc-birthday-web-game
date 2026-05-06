@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Find Me</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Poppins:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  >
+
+</head>
+
+<body>
+
+  <!-- INTRO -->
+
+  <section id="introScreen">
+
+    <h1>Find Me</h1>
+
+    <p>
+      Some memories are worth getting lost for.
+    </p>
+
+    <button id="startBtn">
+      Start Journey
+    </button>
+
+  </section>
+
+  <!-- GAME -->
+
+  <section id="gameScreen" class="hidden">
+
+    <div id="topBar">
+
+      <div id="objective">
+        Find all memories ✨
+      </div>
+
+      <div id="memoryCount">
+        0 / 2
+      </div>
+
+    </div>
+
+    <div id="maze"></div>
+
+  </section>
+
+  <!-- MEMORY POPUP -->
+
+  <div id="memoryPopup" class="hidden">
+
+    <div class="popupContent">
+
+      <img id="memoryImage" />
+
+      <p id="memoryText"></p>
+
+      <button id="closePopup">
+        Continue
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- TRANSITION -->
+
+  <section id="transitionScreen" class="hidden">
+
+    <h1>
+      And there you are.
+    </h1>
+
+  </section>
+
+  <!-- ENDING -->
+
+  <section id="endingScreen" class="hidden">
+    
+    <h1>Happy Birthday ❤️</h1>
+
+    <p class="endingMessage">
+      I think every path somehow led me to you.
+    </p>
+
+    <div class="gallery">
+
+      <img src="images/us1.jpg" />
+      <img src="images/us2.jpg" />
+      <img src="images/us3.jpg" />
+      <img src="images/Nu4.jpg" />
+      <img src="images/Nu5.jpg" />
+
+    </div>
+
+    <button id="replayBtn">
+      Play Again
+    </button>
+
+  </section>
+
+  <!-- MUSIC -->
+
+  <audio id="bgMusic" loop>
+    <source src="audio/Thịnh Suy - Tình Yêu Xanh Lá (juju).mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
