@@ -1,513 +1,162 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* =========================================
+   1. GLOBAL & THEME
+   ========================================= */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
 }
 
-body {
-
-  background: #F7F7F2;
-
-  color: #3E5F44;
-
-  font-family: 'Poppins', sans-serif;
-
-  overflow: hidden;
+:root {
+    --bg-pastel: #E9F5DB;      /* Xanh lá pastel nhạt */
+    --primary-green: #71966A;  /* Xanh lá chủ đạo */
+    --dark-green: #2D4631;     /* Chữ xanh đậm */
+    --accent-green: #AEC3A0;   /* Màu tường Maze */
 }
 
-/* warm lighting */
-body::before {
-
-  content: "";
-
-  position: fixed;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(255,220,120,0.15),
-      transparent 60%
-    );
-
-  pointer-events: none;
+body { 
+    background-color: var(--bg-pastel); 
+    color: var(--dark-green); 
+    font-family: 'Poppins', sans-serif; 
+    overflow-x: hidden;
 }
 
-/* hidden */
-.hidden {
-  display: none !important;
+.hidden { display: none !important; }
+
+/* Các màn hình chính */
+section { 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; /* Xếp dọc các phần tử con */
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    padding: 20px;
 }
 
-/* =========================
-   INTRO
-========================= */
-
-#introScreen {
-
-  height: 100vh;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  text-align: center;
-
-  padding: 20px;
+section h1 {
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 2vh;
+    font-size: clamp(2rem, 6vh, 3.5rem); /* Co giãn theo chiều cao màn hình */
 }
 
-#introScreen h1 {
-
-  font-family: 'Cormorant Garamond', serif;
-
-  font-size: 90px;
-
-  margin-bottom: 20px;
-}
-
-#introScreen p {
-
-  font-size: 20px;
-
-  opacity: 0.8;
-
-  margin-bottom: 40px;
-}
-
-/* BUTTON */
+/* =========================================
+   2. BUTTONS
+   ========================================= */
 button {
-
-  padding: 14px 28px;
-
-  border: none;
-
-  border-radius: 999px;
-
-  background: #598556;
-
-  color: white;
-
-  font-size: 16px;
-
-  cursor: pointer;
-
-  transition: 0.3s;
+    padding: 12px 30px; 
+    border: none; 
+    border-radius: 999px;
+    background: var(--primary-green); 
+    color: white; 
+    cursor: pointer; 
+    transition: 0.3s;
+    font-family: inherit;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-button:hover {
-  transform: scale(1.05);
-}
-
-/* =========================
-   MUSIC SCREEN (PASTEL FIX)
-========================= */
-
-#musicScreen {
-
-  position: fixed;
-  inset: 0;
-
-  background: #F7F7F2;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  z-index: 3000;
-
-  animation: fadeIn 0.8s ease;
-}
-
-/* soft glow background */
-#musicScreen::before {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(174,195,160,0.35),
-      transparent 60%
-    );
-
-  pointer-events: none;
-}
-
-#musicScreen h1 {
-
-  font-family: 'Cormorant Garamond', serif;
-
-  font-size: 64px;
-
-  margin-bottom: 40px;
-
-  color: #3E5F44;
+button:hover { 
+    transform: scale(1.05); 
+    background: #5d7d57; 
 }
 
 .musicList {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 16px;
-
-  z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
 }
 
-.musicBtn {
-
-  width: 340px;
-
-  padding: 18px 22px;
-
-  border-radius: 18px;
-
-  border: 1px solid rgba(174,195,160,0.6);
-
-  background: rgba(221,229,208,0.7);
-
-  color: #3E5F44;
-
-  font-size: 17px;
-
-  backdrop-filter: blur(8px);
-
-  transition: 0.25s;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-}
-
-.musicBtn:hover {
-
-  transform: translateY(-2px) scale(1.02);
-
-  background: rgba(174,195,160,0.5);
-
-  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
-}
-
-/* =========================
-   GAME
-========================= */
-
-#gameScreen {
-
-  width: 100vw;
-
-  height: 100vh;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
+/* =========================================
+   3. GAMEPLAY & MAZE (RESPONSIVE FIX)
+   ========================================= */
+#maze {
+    display: grid;
+    /* Tự động tính toán kích thước ô dựa trên chiều cao màn hình để luôn FIT */
+    grid-template-columns: repeat(16, min(42px, 5.2vh)); 
+    grid-template-rows: repeat(15, min(42px, 5.2vh));
+    gap: 2px;
+    background: white;
+    border-radius: 12px;
+    padding: 8px;
+    border: 6px solid var(--accent-green);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 #topBar {
-
-  width: 760px;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  margin-bottom: 20px;
-
-  font-size: 18px;
+    margin-bottom: 1.5vh;
+    display: flex;
+    gap: 30px;
+    background: white;
+    padding: 8px 25px;
+    border-radius: 50px;
+    font-weight: bold;
 }
 
-#maze {
-
-  display: grid;
-
-  grid-template-columns: repeat(16, 60px);
-
-  grid-template-rows: repeat(15, 60px);
-
-  gap: 4px;
-}
-
-.cell {
-
-  width: 60px;
-
-  height: 60px;
-
-  border-radius: 12px;
-
-  overflow: hidden;
-
-  position: relative;
-
-  transition: 0.25s;
-}
-
-.wall {
-  background: #AEC3A0;
-}
-
-.path {
-  background: #F7F7F2;
-}
-
-.memory {
-
-  background: #DDE5D0;
-
-  position: relative;
-
-  animation: pulse 2s infinite;
-}
-
-.memory::after {
-
-  content: "✨";
-
-  position: absolute;
-
-  inset: 0;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  font-size: 22px;
-}
-
-.goal {
-
-  box-shadow: 0 0 20px rgba(255,220,120,0.5);
-}
-
-/* SPRITE */
-.sprite {
-
-  width: 120%;
-
-  height: 120%;
-
-  position: absolute;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  object-fit: contain;
-
-  pointer-events: none;
-
-  z-index: 5;
-}
-
-/* =========================
-   POPUP
-========================= */
-
-#memoryPopup {
-
-  position: fixed;
-
-  inset: 0;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  background: rgba(0,0,0,0.4);
-
-  backdrop-filter: blur(8px);
-
-  z-index: 1000;
-}
-
-.popupContent {
-
-  width: 400px;
-
-  background: rgba(255,255,255,0.15);
-
-  border: 1px solid rgba(255,255,255,0.2);
-
-  padding: 30px;
-
-  border-radius: 24px;
-
-  text-align: center;
-}
-
-.popupContent img {
-
-  width: 100%;
-
-  border-radius: 18px;
-
-  margin-bottom: 20px;
-}
-
-.popupContent p {
-
-  margin-bottom: 20px;
-
-  line-height: 1.7;
-}
-
-/* =========================
-   TRANSITION
-========================= */
-
-#transitionScreen {
-
-  position: fixed;
-
-  inset: 0;
-
-  background: #F7F7F2;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  z-index: 2000;
-
-  animation: fadeIn 2s ease;
-}
-
-#transitionScreen h1 {
-
-  font-family: 'Cormorant Garamond', serif;
-
-  font-size: 70px;
-}
-
-/* =========================
-   ENDING
-========================= */
-
+.cell { width: 100%; height: 100%; border-radius: 4px; position: relative; }
+.wall { background: var(--accent-green); }
+.path { background: #F7F9F2; }
+
+.memory::after { content: "✨"; position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 20px; animation: pulse 1.5s infinite; }
+.goal::after { content: "❤️"; position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 28px; }
+.sprite { width: 100%; height: 100%; object-fit: contain; z-index: 10; position: relative; }
+
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+/* =========================================
+   4. ENDING & GALLERY
+   ========================================= */
 #endingScreen {
-
-  min-height: 100vh;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  text-align: center;
-
-  padding: 40px;
-
-  animation: fadeIn 2s ease;
-}
-
-#endingScreen h1 {
-
-  font-family: 'Cormorant Garamond', serif;
-
-  font-size: 80px;
-
-  margin-bottom: 20px;
+    display: block; 
+    height: auto; 
+    min-height: 100vh; 
+    padding: 60px 20px; 
+    overflow-y: auto;
 }
 
 .endingMessage {
-
-  max-width: 700px;
-
-  font-size: 22px;
-
-  line-height: 1.8;
-
-  margin-bottom: 40px;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    line-height: 1.8;
+    background: rgba(255,255,255,0.4);
+    padding: 30px;
+    border-radius: 20px;
 }
 
-/* GALLERY */
 .gallery {
-
-  display: flex;
-
-  gap: 24px;
-
-  flex-wrap: wrap;
-
-  justify-content: center;
-
-  align-items: flex-end;
-
-  margin-bottom: 40px;
-
-  max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .gallery img {
-
-  max-width: 260px;
-
-  max-height: 340px;
-
-  width: auto;
-
-  height: auto;
-
-  object-fit: contain;
-
-  border-radius: 24px;
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-
-  transition: 0.3s;
+    width: 160px;
+    height: 210px;
+    object-fit: cover;
+    background: white;
+    padding: 8px 8px 25px 8px; /* Polaroid style */
+    border-radius: 3px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.gallery img:hover {
-  transform: scale(1.03);
+.gallery img:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 100; }
+.gallery img:nth-child(even) { transform: rotate(3deg); }
+.gallery img:nth-child(odd) { transform: rotate(-3deg); }
+
+/* Popup & Modal */
+#memoryPopup, #imageModal {
+    position: fixed; inset: 0; 
+    background: rgba(45, 70, 49, 0.9);
+    display: flex; justify-content: center; align-items: center; z-index: 9999;
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
-
-@keyframes pulse {
-
-  0% { box-shadow: 0 0 0px rgba(255,255,180,0.2); }
-
-  50% { box-shadow: 0 0 18px rgba(255,255,180,0.8); }
-
-  100% { box-shadow: 0 0 0px rgba(255,255,180,0.2); }
-}
-
-@keyframes fadeIn {
-
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+.popupContent { background: white; padding: 25px; border-radius: 20px; text-align: center; max-width: 350px; }
+#memoryImage { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+#modalImg { max-width: 90%; max-height: 85%; border: 8px solid white; border-radius: 5px; }
