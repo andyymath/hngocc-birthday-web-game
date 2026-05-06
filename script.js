@@ -19,23 +19,22 @@ const bgMusic = document.getElementById("bgMusic");
 const maze = [
 
 "################",
-"#P....#......#.#",
-"#.##..#.####.#.#",
-"#..M..#....#...#",
+"#P....#........#",
+"#.#####.#####..#",
+"#..M..#...#....#",
 "###.#####.#.##.#",
-"#...#...#.#....#",
+"#...#.....#..M##",
 "#.#.#.###.###..#",
-"#.#...M.#...#..#",
+"#.#.....#...#.##",
 "#.#####.#.#.#..#",
-"#...#...#.#....#",
-"###.#.###.####.#",
-"#...#..M#....#.#",
-"#.#####.####.#.#",
-"#..M....M....#G#",
+"#...#...#.#M##.#",
+"###.#.###.###..#",
+"#...#..M.....#.#",
+"#.#########..#.#",
+"#..M.........#G#",
 "################"
 
 ];
-
 
 /* PLAYER */
 
@@ -55,22 +54,22 @@ const memories = {
     text: "The first memory ✨"
   },
 
-  "6,7": {
+  "13,5": {
     image: "images/Nu2.jpg",
     text: "One of my favorite days with you."
   },
 
-  "7,11": {
+  "11,9": {
     image: "images/Nu3.jpg",
     text: "Still makes me smile every time."
   },
 
-  "3,13": {
+  "7,11": {
     image: "images/Nu4.jpg",
     text: "A tiny moment I never forgot."
   },
 
-  "8,13": {
+  "3,13": {
     image: "images/Nu5.jpg",
     text: "And somehow every path led to you ❤️"
   }
