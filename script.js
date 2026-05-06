@@ -1,203 +1,131 @@
 const mazeElement = document.getElementById("maze");
-
-const introScreen = document.getElementById("introScreen");
-const musicScreen = document.getElementById("musicScreen");
-const gameScreen = document.getElementById("gameScreen");
-const endingScreen = document.getElementById("endingScreen");
-const transitionScreen = document.getElementById("transitionScreen");
-
 const popup = document.getElementById("memoryPopup");
-const popupImage = document.getElementById("memoryImage");
-const popupText = document.getElementById("memoryText");
-
-const memoryCount = document.getElementById("memoryCount");
-
 const bgMusic = document.getElementById("bgMusic");
 
-/* ===================== MAZE ===================== */
+let player = { x: 1, y: 1 };
+let collected = new Set();
+const totalMemories = 5;
 
 const maze = [
-"################",
-"#P....#M.......#",
-"#.#####.#####..#",
-"#..M..#...#....#",
-"###.#####.#.##.#",
-"#...#.....#..M##",
-"#.###.###.###..#",
-"#.#.....#...#.##",
-"#.#####.#.#.#..#",
-"#...#...#.#M##.#",
-"###.#.###.###..#",
-"#...#.....#....#",
-"#.###.######.###",
-"#..M......#...G#",
-"################"
+    "################",
+    "#P....#M.......#",
+    "#.#####.#####..#",
+    "#..M..#...#....#",
+    "###.#####.#.##.#",
+    "#...#.....#..M##",
+    "#.###.###.###..#",
+    "#.#.....#...#.##",
+    "#.#####.#.#.#..#",
+    "#...#...#.#M##.#",
+    "###.#.###.###..#",
+    "#...#.....#....#",
+    "#.###.######.###",
+    "#..M......#...G#",
+    "################"
 ];
 
-/* ===================== PLAYER ===================== */
-
-let player = { x: 1, y: 1 };
-let collectedMemories = [];
-
-/* ===================== MEMORIES ===================== */
-
 const memories = {
-  "3,3": { image: "images/Nu1.jpg", text: "The first memory ✨" },
-  "13,5": { image: "images/Nu2.jpg", text: "One of my favorite days with you." },
-  "11,9": { image: "images/Nu3.jpg", text: "Still makes me smile every time." },
-  "7,1": { image: "images/Nu4.jpg", text: "A tiny moment I never forgot." },
-  "3,13": { image: "images/Nu5.jpg", text: "And somehow every path led to you ❤️" }
+    "7,1": { image: "images/Nu4.jpg", text: "Tụi mình dễ thươngggg 🫶" },
+    "3,3": { image: "images/Nu1.jpg", text: "Bức ảnh chung đầu tiên của tụi mình" },
+    "13,5": { image: "images/Nu7.jpg", text: "Awwwwwwwww 😚" },
+    "11,9": { image: "images/Nu3.jpg", text: "Chính thức mập rõ >.<" },
+    "3,13": { image: "images/Nu5.jpg", text: "Anh bị cuốn hút bởi bé từ khi nào không hay 🥹" }
 };
 
-/* ===================== RENDER ===================== */
+const galleryImages = ["Nu1", "Nu2", "Nu3", "Nu4", "Nu5", "Nu6", "Nu7", "Nu8", "Nu9", "Nu11", "Nu12", "Nu13", "Nu14", "Nu15", "Nu16", "Nu17", "Nu30", "Nu50", "us2", "us3", "us4"];
+
+// Chuyển màn hình
+document.getElementById("startBtn").onclick = () => {
+    document.getElementById("introScreen").classList.add("hidden");
+    document.getElementById("musicScreen").classList.remove("hidden");
+};
+
+document.querySelectorAll(".musicBtn").forEach(btn => {
+    btn.onclick = () => {
+        bgMusic.src = btn.dataset.song;
+        bgMusic.play();
+        document.getElementById("musicScreen").classList.add("hidden");
+        document.getElementById("rulesScreen").classList.remove("hidden");
+    };
+});
+
+document.getElementById("startGameBtn").onclick = () => {
+    document.getElementById("rulesScreen").classList.add("hidden");
+    document.getElementById("gameScreen").classList.remove("hidden");
+    renderMaze();
+};
 
 function renderMaze() {
-
-  mazeElement.innerHTML = "";
-
-  for (let y = 0; y < maze.length; y++) {
-    for (let x = 0; x < maze[y].length; x++) {
-
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-
-      const value = maze[y][x];
-
-      if (value === "#") cell.classList.add("wall");
-      else cell.classList.add("path");
-
-      if (x === player.x && y === player.y) {
-        cell.classList.add("player");
-
-        const img = document.createElement("img");
-        img.src = "assets/princess.png";
-        img.classList.add("sprite");
-        cell.appendChild(img);
-      }
-
-      if (value === "G") {
-        cell.classList.add("goal");
-
-        const goalImg = document.createElement("img");
-        goalImg.src = "assets/goal.png";
-        goalImg.classList.add("sprite");
-        cell.appendChild(goalImg);
-      }
-
-      if (value === "M" && !collectedMemories.includes(`${x},${y}`)) {
-        cell.classList.add("memory");
-      }
-
-      mazeElement.appendChild(cell);
+    mazeElement.innerHTML = "";
+    for (let y = 0; y < maze.length; y++) {
+        for (let x = 0; x < maze[y].length; x++) {
+            const cell = document.createElement("div");
+            cell.className = "cell " + (maze[y][x] === "#" ? "wall" : "path");
+            if (maze[y][x] === "M") cell.classList.add("memory");
+            if (maze[y][x] === "G") cell.classList.add("goal");
+            if (x === player.x && y === player.y) {
+                const img = document.createElement("img");
+                img.src = "assets/princess.png"; // Đảm bảo bạn có file này
+                img.className = "sprite";
+                cell.appendChild(img);
+            }
+            mazeElement.appendChild(cell);
+        }
     }
-  }
-
-  memoryCount.innerText =
-    `${collectedMemories.length} / ${Object.keys(memories).length}`;
 }
-
-/* ===================== MUSIC FLOW (FIXED) ===================== */
-
-const startBtn = document.getElementById("startBtn");
-
-startBtn.addEventListener("click", () => {
-  introScreen.classList.add("hidden");
-  musicScreen.classList.remove("hidden");
-});
-
-/* chọn nhạc */
-document.querySelectorAll(".musicBtn").forEach(btn => {
-  btn.addEventListener("click", () => {
-
-    const song = btn.dataset.song;
-
-    bgMusic.src = song;
-    bgMusic.play();
-
-    musicScreen.classList.add("hidden");
-    gameScreen.classList.remove("hidden");
-
-    renderMaze();
-  });
-});
-
-/* ===================== MOVE ===================== */
 
 function movePlayer(dx, dy) {
+    if (!popup.classList.contains("hidden")) return;
+    const nx = player.x + dx, ny = player.y + dy;
+    if (maze[ny][nx] === "#") return;
 
-  const newX = player.x + dx;
-  const newY = player.y + dy;
+    player.x = nx;
+    player.y = ny;
+    
+    const key = `${nx},${ny}`;
+    if (maze[ny][nx] === "M" && !collected.has(key)) {
+        collected.add(key);
+        document.getElementById("memoryCount").innerText = `${collected.size} / ${totalMemories}`;
+        if (memories[key]) {
+            document.getElementById("memoryImage").src = memories[key].image;
+            document.getElementById("memoryText").innerText = memories[key].text;
+            popup.classList.remove("hidden");
+        }
+    }
 
-  if (maze[newY][newX] === "#") return;
-
-  player.x = newX;
-  player.y = newY;
-
-  checkInteractions();
-  renderMaze();
-}
-
-/* ===================== INTERACTION ===================== */
-
-function checkInteractions() {
-
-  const tile = maze[player.y][player.x];
-  const key = `${player.x},${player.y}`;
-
-  if (tile === "M" && !collectedMemories.includes(key)) {
-
-    collectedMemories.push(key);
-
-    popup.classList.remove("hidden");
-
-    popupImage.src = memories[key].image;
-    popupText.innerText = memories[key].text;
-  }
-
-  if (
-    tile === "G" &&
-    collectedMemories.length === Object.keys(memories).length
-  ) {
-    gameScreen.classList.add("hidden");
-
-    transitionScreen.classList.remove("hidden");
-
-    setTimeout(() => {
-      transitionScreen.classList.add("hidden");
-      endingScreen.classList.remove("hidden");
-    }, 2500);
-  }
-}
-
-/* ===================== CONTROLS ===================== */
-
-document.addEventListener("keydown", (e) => {
-
-  if (!popup.classList.contains("hidden")) return;
-
-  if (e.key === "ArrowUp") movePlayer(0, -1);
-  if (e.key === "ArrowDown") movePlayer(0, 1);
-  if (e.key === "ArrowLeft") movePlayer(-1, 0);
-  if (e.key === "ArrowRight") movePlayer(1, 0);
-});
-
-/* ===================== POPUP ===================== */
-
-document.getElementById("closePopup")
-  .addEventListener("click", () => {
-    popup.classList.add("hidden");
-  });
-
-/* ===================== REPLAY ===================== */
-
-document.getElementById("replayBtn")
-  .addEventListener("click", () => {
-
-    player = { x: 1, y: 1 };
-    collectedMemories = [];
-
-    endingScreen.classList.add("hidden");
-    gameScreen.classList.remove("hidden");
-
+    if (maze[ny][nx] === "G" && collected.size === totalMemories) {
+        document.getElementById("gameScreen").classList.add("hidden");
+        document.getElementById("transitionScreen").classList.remove("hidden");
+        setupGallery();
+        setTimeout(() => {
+            document.getElementById("transitionScreen").classList.add("hidden");
+            document.getElementById("endingScreen").classList.remove("hidden");
+        }, 2500);
+    }
     renderMaze();
-  });
+}
+
+function setupGallery() {
+    const container = document.querySelector(".gallery");
+    container.innerHTML = "";
+    [...galleryImages].sort(() => Math.random() - 0.5).forEach(name => {
+        const img = document.createElement("img");
+        img.src = `images/${name}.jpg`;
+        img.onclick = () => {
+            document.getElementById("modalImg").src = img.src;
+            document.getElementById("imageModal").classList.remove("hidden");
+        };
+        container.appendChild(img);
+    });
+}
+
+window.onkeydown = (e) => {
+    if (e.key === "ArrowUp") movePlayer(0, -1);
+    if (e.key === "ArrowDown") movePlayer(0, 1);
+    if (e.key === "ArrowLeft") movePlayer(-1, 0);
+    if (e.key === "ArrowRight") movePlayer(1, 0);
+};
+
+document.getElementById("closePopup").onclick = () => popup.classList.add("hidden");
+document.getElementById("imageModal").onclick = () => document.getElementById("imageModal").classList.add("hidden");
+document.getElementById("replayBtn").onclick = () => location.reload();
