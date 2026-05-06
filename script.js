@@ -26,7 +26,7 @@ const maze = [
 
 const memories = {
     "7,1": { image: "images/Nu4.jpg", text: "Tụi mình dễ thươngggg 🫶" },
-    "3,3": { image: "images/Nu1.JPG", text: "Bức ảnh chung đầu tiên của tụi mình" },
+    "3,3": { image: "images/Nu1.jpg", text: "Bức ảnh chung đầu tiên của tụi mình" },
     "13,5": { image: "images/Nu7.jpg", text: "Awwwwwwwww 😚" },
     "11,9": { image: "images/Nu3.jpg", text: "Chính thức mập rõ >.<" },
     "3,13": { image: "images/Nu5.jpg", text: "Anh bị cuốn hút bởi bé từ khi nào không hay 🥹" }
